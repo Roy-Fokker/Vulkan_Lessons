@@ -8,6 +8,7 @@ auto main() -> int
 	std::wstring cmd_line(GetCommandLine());
 
 	using namespace vulkan_lessons;
+	
 	bool exit_program{false};
 	uint16_t width{800},
 			 height{600};

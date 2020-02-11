@@ -1,7 +1,8 @@
 # Find the fmtlib package installed by vcpkg.
 # fmtlib can be installed by running following command in shell
-# => vcpkg install fmt cppitertools
+# => vcpkg install fmt cppitertools vulkan vulkan-hpp
 find_package(fmt REQUIRED)
+find_package(Vulkan REQUIRED)
 
 # Define the executable we want to build.
 add_executable(lesson_1)
@@ -11,7 +12,9 @@ target_sources(lesson_1
     PRIVATE
         main.cpp
         window.cpp
-        window.hpp)
+        window.hpp
+        application_base.cpp
+        application_base.hpp)
 
 # Tell the build system we have to use C++17 Standard
 target_compile_features(lesson_1
@@ -44,4 +47,5 @@ target_compile_definitions(lesson_1
 # Add the fmt library to linker lib path for lesson_1 executable.
 target_link_libraries(lesson_1 
     PRIVATE 
-        fmt::fmt)
+        fmt::fmt
+        Vulkan::Vulkan)
