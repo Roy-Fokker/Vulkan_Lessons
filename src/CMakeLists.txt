@@ -9,7 +9,9 @@ add_executable(lesson_1)
 # Source files used to build lesson_1.exe
 target_sources(lesson_1
     PRIVATE
-        main.cpp)
+        main.cpp
+        window.cpp
+        window.hpp)
 
 # Tell the build system we have to use C++17 Standard
 target_compile_features(lesson_1
