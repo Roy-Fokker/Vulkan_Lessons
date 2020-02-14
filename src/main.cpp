@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include "application_base.hpp"
 
 #include <fmt/core.h>
 #include <string>
@@ -25,10 +26,13 @@ auto main() -> int
 			return true;
 	});
 
+	application_base app(wnd.handle());
+
 	wnd.show();
 	while(wnd.handle() and (not exit_program))
 	{
 		wnd.process_messages();
+		app.update();
 	}
 
 	return 0;

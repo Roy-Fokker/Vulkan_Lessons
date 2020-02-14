@@ -44,6 +44,10 @@ target_compile_definitions(lesson_1
         $<$<CONFIG:Debug>:DEBUG _DEBUG>
         $<$<CXX_COMPILER_ID:MSVC>:_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING>)
 
+target_include_directories(lesson_1
+        PRIVATE
+            ${Vulkan_INCLUDE_DIR})
+
 # Add the fmt library to linker lib path for lesson_1 executable.
 target_link_libraries(lesson_1 
     PRIVATE 

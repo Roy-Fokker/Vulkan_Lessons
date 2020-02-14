@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <vulkan/vulkan.hpp>
 
 namespace vulkan_lessons
 {
@@ -14,9 +15,9 @@ namespace vulkan_lessons
         void update();
 
     private:
-        void initialize_vulkan();
+        void initialize_vulkan(HWND hwnd);
 
     private:
-        
+        vk::UniqueInstance instance;
     };
 }
