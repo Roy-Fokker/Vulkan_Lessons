@@ -1,7 +1,7 @@
 # Vulkan Lessons
 
-CMake based project to learn [Vulkan](https://www.khronos.org/vulkan/).
-Follows the structure layout in [Vulkan Tutorials](https://vulkan-tutorial.com/) site, roughly.
+CMake based project to learn [Vulkan](https://www.khronos.org/vulkan/).  
+Follows the structure layout in [Vulkan Tutorials](https://vulkan-tutorial.com/) site, roughly.  
 Heavy use is made of [vulkan-hpp](https://github.com/KhronosGroup/Vulkan-Hpp)
 
 Few changes made to accomodate my-style™.
