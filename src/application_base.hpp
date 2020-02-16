@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <vulkan/vulkan.hpp>
+#include <vector>
 
 namespace vulkan_lessons
 {
@@ -15,7 +16,10 @@ namespace vulkan_lessons
         void update();
 
     private:
-        void initialize_vulkan(HWND hwnd);
+        void create_vulkan_instance();
+        auto get_supported_extensions() -> std::vector<const char *>;
+        auto get_validation_layers() -> std::vector<const char *>;
+        void check_validation_layer_support();
 
     private:
         vk::UniqueInstance instance;
