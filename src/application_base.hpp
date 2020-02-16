@@ -19,7 +19,6 @@ namespace vulkan_lessons
         void create_vulkan_instance();
         auto get_supported_extensions() -> std::vector<const char *>;
         auto get_validation_layers() -> std::vector<const char *>;
-        void check_validation_layer_support();
 
     private:
         vk::UniqueInstance instance;

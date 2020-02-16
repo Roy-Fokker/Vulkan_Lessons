@@ -6,6 +6,14 @@
 
 using namespace vulkan_lessons;
 
+namespace 
+{
+    bool cstr_cmp_less(const char *a, const char *b)
+    {
+        return strcmp(a, b) < 0;
+    }
+}
+
 application_base::application_base(HWND hwnd)
 {
     create_vulkan_instance();
@@ -48,10 +56,43 @@ void application_base::create_vulkan_instance()
 
 auto application_base::get_supported_extensions() -> std::vector<const char *>
 {
+    auto desired_extensions = std::vector{
+        VK_KHR_SURFACE_EXTENSION_NAME,
+        VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+    };
+#ifdef DEBUG
+    desired_extensions.insert(desired_extensions.end(), {
+        VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
+        VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+    });
+#endif
+    std::sort(desired_extensions.begin(), desired_extensions.end(),
+              cstr_cmp_less);
+
     // checking extension support
     auto extensions = vk::enumerateInstanceExtensionProperties();
+    std::sort(extensions.begin(), extensions.end(), 
+              [] (vk::ExtensionProperties const &a, vk::ExtensionProperties const &b)
+    {
+        return cstr_cmp_less(a.extensionName, b.extensionName);
+    });
 
-    return {};
+    // Get only the extension names
+    auto available_extensions = std::vector<const char *>{};
+    for (auto &ext : extensions)
+    {
+        available_extensions.emplace_back(ext.extensionName);
+    }
+
+    auto are_extensions_found = std::includes(available_extensions.begin(), available_extensions.end(),
+                                              desired_extensions.begin(), desired_extensions.end(),
+                                              cstr_cmp_less);
+    if (not are_extensions_found)
+    {
+        return {};
+    }
+
+    return desired_extensions;
 }
 
 auto application_base::get_validation_layers() -> std::vector<const char *>
@@ -66,33 +107,27 @@ auto application_base::get_validation_layers() -> std::vector<const char *>
         "VK_LAYER_LUNARG_standard_validation"
     };
     std::sort(desired_validation_layers.begin(), desired_validation_layers.end(),
-              [](const char *a, const char *b)
-    {
-        return strcmp(a, b) < 0;
-    });
+              cstr_cmp_less);
 
     // checking layer support
     auto validation_layers = vk::enumerateInstanceLayerProperties();
     std::sort(validation_layers.begin(), validation_layers.end(), 
               [] (vk::LayerProperties const &a, vk::LayerProperties const &b)
     {
-        return strcmp(a.layerName, b.layerName) < 0;
+        return cstr_cmp_less(a.layerName, b.layerName);
     });
 
+    // Get only the layer names
     auto available_layers = std::vector<const char *>{};
     for (auto &layer : validation_layers)
     {
         available_layers.emplace_back(layer.layerName);
     }
 
-    auto comp = [](const char *a, const char *b)
-    {
-        return strcmp(a, b) == 0;
-    };
-
+    // Does machine support desired layers
     auto are_layers_found = std::includes(available_layers.begin(), available_layers.end(),
                                           desired_validation_layers.begin(), desired_validation_layers.end(),
-                                          comp);
+                                          cstr_cmp_less);
 
     if (not are_layers_found)
     {
@@ -100,9 +135,4 @@ auto application_base::get_validation_layers() -> std::vector<const char *>
     }
 
     return desired_validation_layers;
-}
-
-void application_base::check_validation_layer_support()
-{
-
 }

@@ -40,7 +40,7 @@ target_link_options(lesson_1
 # Define only for MSVC to silence deprecated header warnings
 target_compile_definitions(lesson_1
     PRIVATE
-        UNICODE _UNICODE
+        UNICODE _UNICODE VK_USE_PLATFORM_WIN32_KHR
         $<$<CONFIG:Debug>:DEBUG _DEBUG>
         $<$<CXX_COMPILER_ID:MSVC>:_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING>)
 
