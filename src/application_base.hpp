@@ -20,7 +20,10 @@ namespace vulkan_lessons
         auto get_supported_extensions() -> std::vector<const char *>;
         auto get_validation_layers() -> std::vector<const char *>;
 
+        void setup_debug_callback();
+        
     private:
         vk::UniqueInstance instance;
+
     };
 }

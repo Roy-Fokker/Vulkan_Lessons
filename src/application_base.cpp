@@ -1,8 +1,9 @@
 #include "application_base.hpp"
 
-#include <algorithm>
-#include <string>
+#include <fmt/core.h>
 #include <cppitertools/enumerate.hpp>
+#include <algorithm>
+
 
 using namespace vulkan_lessons;
 
@@ -12,12 +13,24 @@ namespace
     {
         return strcmp(a, b) < 0;
     }
+
+    static VKAPI_ATTR vk::Bool32 VKAPI_CALL 
+    debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+                  VkDebugUtilsMessageTypeFlagsEXT messageType,
+                  const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                  void* pUserData)
+    {
+        fmt::print("Validation Layer: {}\n", pCallbackData->pMessage);
+        return VK_FALSE;
+    }
+
+    
 }
 
 application_base::application_base(HWND hwnd)
 {
     create_vulkan_instance();
-    
+    setup_debug_callback();
 }
 
 application_base::~application_base() = default;
@@ -97,6 +110,7 @@ auto application_base::get_supported_extensions() -> std::vector<const char *>
 
 auto application_base::get_validation_layers() -> std::vector<const char *>
 {
+    
 // Don't enable validation layers if we are not debugging.
 #ifndef DEBUG
     return {};
@@ -135,4 +149,21 @@ auto application_base::get_validation_layers() -> std::vector<const char *>
     }
 
     return desired_validation_layers;
+}
+
+void application_base::setup_debug_callback()
+{
+#ifdef DEBUG
+    auto messenger_info = vk::DebugUtilsMessengerCreateInfoEXT()
+                            .setPfnUserCallback(&debug_callback)
+                            .setMessageSeverity(vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose 
+                                              | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning
+                                              | vk::DebugUtilsMessageSeverityFlagBitsEXT::eError)
+                            .setMessageType(vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral 
+                                          | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation 
+                                          | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance);
+
+    auto dispatcher = vk::DispatchLoaderDynamic(instance.get(), vkGetInstanceProcAddr);
+    instance->createDebugUtilsMessengerEXTUnique(messenger_info, nullptr, dispatcher);
+#endif
 }
