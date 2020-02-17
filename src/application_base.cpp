@@ -9,11 +9,15 @@ using namespace vulkan_lessons;
 
 namespace 
 {
+    // Simple C String compare less function
+    // used by std::sort and std::include below.
     bool cstr_cmp_less(const char *a, const char *b)
     {
         return strcmp(a, b) < 0;
     }
 
+    // Debug Messenger callback 
+    // Haven't understood all the parameters
     static VKAPI_ATTR vk::Bool32 VKAPI_CALL 
     debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                   VkDebugUtilsMessageTypeFlagsEXT messageType,
@@ -23,8 +27,6 @@ namespace
         fmt::print("Validation Layer: {}\n", pCallbackData->pMessage);
         return VK_FALSE;
     }
-
-    
 }
 
 application_base::application_base(HWND hwnd)
@@ -69,11 +71,13 @@ void application_base::create_vulkan_instance()
 
 auto application_base::get_supported_extensions() -> std::vector<const char *>
 {
+    // What extensions do we want?
     auto desired_extensions = std::vector{
         VK_KHR_SURFACE_EXTENSION_NAME,
         VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
     };
 #ifdef DEBUG
+    // Add a few more if debugging
     desired_extensions.insert(desired_extensions.end(), {
         VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
         VK_EXT_DEBUG_UTILS_EXTENSION_NAME
@@ -97,6 +101,7 @@ auto application_base::get_supported_extensions() -> std::vector<const char *>
         available_extensions.emplace_back(ext.extensionName);
     }
 
+    // Does this machine support the extensions?
     auto are_extensions_found = std::includes(available_extensions.begin(), available_extensions.end(),
                                               desired_extensions.begin(), desired_extensions.end(),
                                               cstr_cmp_less);
@@ -151,6 +156,8 @@ auto application_base::get_validation_layers() -> std::vector<const char *>
     return desired_validation_layers;
 }
 
+// This whole method makes no sense.
+// I don't think debugging callback works.
 void application_base::setup_debug_callback()
 {
 #ifdef DEBUG
