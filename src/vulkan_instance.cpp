@@ -1,6 +1,7 @@
 #include "vulkan_instance.h"
 
 #include <cstring>
+#include <fmt/format.h>
 
 using namespace vulkan_lessons;
 
@@ -12,14 +13,33 @@ namespace
 	{
 		return std::strcmp(a, b) < 0;
 	}
+
+	// Vulkan Debug Message callback function
+	static VKAPI_ATTR VkBool32 VKAPI_CALL 
+	debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+				  VkDebugUtilsMessageTypeFlagsEXT messageType,
+				  const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+				  void* pUserData)
+	{
+
+		auto msg = fmt::format("Validation Layer: {}\n", pCallbackData->pMessage);
+		OutputDebugStringA(msg.c_str()); // explicitly call char version
+
+		return VK_FALSE;
+	}
 }
 
 vk_instance::vk_instance()
 {
 	create_instance();
+
+	setup_debug_messenger();
 }
 
-vk_instance::~vk_instance() = default;
+vk_instance::~vk_instance()
+{
+	delete_debug_messenger();
+}
 
 void vk_instance::create_instance()
 {
@@ -128,4 +148,40 @@ auto vk_instance::get_validation_layers() -> std::vector<const char*>
 	}
 
 	return desired_validation_layers;
+}
+
+void vk_instance::setup_debug_messenger()
+{
+#ifndef DEBUG
+	return;
+#endif // !DEBUG
+
+	// Some aliases to reduce excessive noise.
+	using vk_severity = vk::DebugUtilsMessageSeverityFlagBitsEXT;
+	using vk_msg_type = vk::DebugUtilsMessageTypeFlagBitsEXT;
+
+	dispatch_loader = vk::DispatchLoaderDynamic(*instance, vkGetInstanceProcAddr);
+	auto messenger_info = vk::DebugUtilsMessengerCreateInfoEXT()
+		.setPfnUserCallback(debug_callback)
+		.setMessageSeverity(vk_severity::eInfo
+							| vk_severity::eVerbose
+							| vk_severity::eWarning
+							| vk_severity::eError)
+		.setMessageType(vk_msg_type::eGeneral 
+						| vk_msg_type::eValidation 
+						| vk_msg_type::ePerformance);
+
+	debug_messenger = instance->createDebugUtilsMessengerEXT(messenger_info,
+															 nullptr,
+															 dispatch_loader);
+}
+
+// TODO: Ideally, vk::UniqueHandle version should be used
+// so that this function becomes redundant.
+// But I can't get those types to work for some reason.
+void vk_instance::delete_debug_messenger()
+{
+	instance->destroyDebugUtilsMessengerEXT(debug_messenger,
+											nullptr,
+											dispatch_loader);
 }
