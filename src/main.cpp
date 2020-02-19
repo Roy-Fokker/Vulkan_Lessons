@@ -1,4 +1,5 @@
 #include "window.h"
+#include "vulkan_instance.h"
 
 #include <Windows.h>
 #include <fmt/core.h>
@@ -35,6 +36,8 @@ auto main() -> int
 		}
 		return true;
 	});
+
+	auto vk_inst = vulkan_lessons::vk_instance();
 
 	wnd.show();
 	while (wnd.handle() and not exit_application)
