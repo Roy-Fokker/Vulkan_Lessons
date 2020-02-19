@@ -10,7 +10,7 @@ Few changes made to accomodate my-style™.
 ## Lesson 1 - Setup
 - [x] Window setup 
 - [x] Vulkan instance
-- [ ] Validation layer
+- [!] Validation layer -- Incomplete, issues remain in understanding how it works.
 - [ ] Physical devices and queue families
 - [ ] Logical devices and queues
 
