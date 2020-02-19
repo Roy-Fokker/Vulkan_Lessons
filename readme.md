@@ -8,8 +8,8 @@ Few changes made to accomodate my-style™.
 
 ---
 ## Lesson 1 - Setup
-- [ ] Window setup 
-- [ ] Vulkan instance
+- [x] Window setup 
+- [x] Vulkan instance
 - [ ] Validation layer
 - [ ] Physical devices and queue families
 - [ ] Logical devices and queues
