@@ -1,16 +1,16 @@
 # Vulkan Lessons
 
-CMake based project to learn [Vulkan](https://www.khronos.org/vulkan/).  
+Project to learn [Vulkan](https://www.khronos.org/vulkan/).  
 Follows the structure layout in [Vulkan Tutorials](https://vulkan-tutorial.com/) site, roughly.  
-Heavy use is made of [vulkan-hpp](https://github.com/KhronosGroup/Vulkan-Hpp)
+Use is made of [vulkan-hpp](https://github.com/KhronosGroup/Vulkan-Hpp)
 
 Few changes made to accomodate my-style™.
 
 ---
 ## Lesson 1 - Setup
-- [x] Window setup 
-- [x] Vulkan instance
-- [!] Validation layer -- Incomplete, issues remain in understanding how it works.
+- [ ] Window setup 
+- [ ] Vulkan instance
+- [ ] Validation layer
 - [ ] Physical devices and queue families
 - [ ] Logical devices and queues
 
