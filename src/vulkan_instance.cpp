@@ -6,10 +6,12 @@ using namespace vulkan_lessons;
 
 namespace
 {
-    auto cstr_cmp_less(const char* a, const char* b) -> bool
-    {
-        return std::strcmp(a, b) < 0;
-    }
+	// Simple CString Compare Less, 
+	// used by all the std::sort and std::include below
+	auto cstr_cmp_less(const char* a, const char* b) -> bool
+	{
+		return std::strcmp(a, b) < 0;
+	}
 }
 
 vk_instance::vk_instance()
