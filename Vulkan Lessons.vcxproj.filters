@@ -24,12 +24,18 @@
     <ClCompile Include="src\vulkan_instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\vulkan_devices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\vulkan_instance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan_devices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

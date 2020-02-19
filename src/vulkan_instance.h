@@ -11,6 +11,8 @@ namespace vulkan_lessons
 		vk_instance();
 		~vk_instance();
 
+		auto get_instance() const->const vk::Instance &;
+
 	private:
 		void create_instance();
 		auto create_application_info()->vk::ApplicationInfo;

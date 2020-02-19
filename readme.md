@@ -11,7 +11,7 @@ Few changes made to accomodate my-style™.
 - [x] Window setup 
 - [x] Vulkan instance
 - [x] Validation layer and debug messenger
-- [ ] Physical devices and queue families
+- [x] Physical devices and queue families
 - [ ] Logical devices and queues
 
 ## Lesson 2 - Presentation

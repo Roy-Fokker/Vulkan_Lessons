@@ -82,10 +82,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\vulkan_devices.cpp" />
     <ClCompile Include="src\vulkan_instance.cpp" />
     <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\vulkan_devices.h" />
     <ClInclude Include="src\vulkan_instance.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>

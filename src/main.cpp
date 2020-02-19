@@ -1,5 +1,6 @@
 #include "window.h"
 #include "vulkan_instance.h"
+#include "vulkan_devices.h"
 
 #include <Windows.h>
 #include <fmt/core.h>
@@ -38,6 +39,7 @@ auto main() -> int
 	});
 
 	auto vk_inst = vulkan_lessons::vk_instance();
+	auto vk_device = vulkan_lessons::vk_device(vk_inst.get_instance());
 
 	wnd.show();
 	while (wnd.handle() and not exit_application)

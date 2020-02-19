@@ -41,6 +41,11 @@ vk_instance::~vk_instance()
 	delete_debug_messenger();
 }
 
+auto vk_instance::get_instance() const -> const vk::Instance &
+{
+	return instance.get();
+}
+
 void vk_instance::create_instance()
 {
 	auto app_info = create_application_info();
