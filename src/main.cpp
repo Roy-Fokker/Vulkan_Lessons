@@ -22,8 +22,10 @@ auto main() -> int
 
 	bool exit_application{ false };
 
-	auto wnd = window(L"Vulkan Lessons", { 800, 600 });
-	wnd.on_message(window::message_name::keypress, [&](uintptr_t key_code, uintptr_t extension) -> bool
+	auto wnd = window(L"Vulkan Lessons", 
+					  { 800, 600 });
+	wnd.on_message(window::message_name::keypress, 
+				   [&](uintptr_t key_code, uintptr_t extension) -> bool
 	{
 		switch (key_code)
 		{
