@@ -47,6 +47,7 @@ namespace
 vk_device::vk_device(const vk::Instance &instance)
 {
 	pick_physical_device(instance);
+	create_logical_device();
 }
 
 vk_device::~vk_device() = default;
@@ -73,4 +74,23 @@ void vk_device::pick_physical_device(const vk::Instance &instance)
 		throw std::runtime_error("Failed to find suitable GPU");
 	}
 	
+}
+
+void vk_device::create_logical_device()
+{
+	auto queue_priority{ 1.0f };
+	auto queue_family_index = get_queue_family_index(physical_device);
+	auto device_queue_info = vk::DeviceQueueCreateInfo()
+		.setQueueFamilyIndex(queue_family_index.value())
+		.setQueueCount(1)
+		.setPQueuePriorities(&queue_priority);
+	
+	auto device_features = vk::PhysicalDeviceFeatures{};
+	auto device_info = vk::DeviceCreateInfo()
+		.setQueueCreateInfoCount(1)
+		.setPQueueCreateInfos(&device_queue_info)
+		.setPEnabledFeatures(&device_features);
+
+	logical_device = physical_device.createDeviceUnique(device_info);
+	graphics_queue = logical_device->getQueue(queue_family_index.value(), 0);
 }

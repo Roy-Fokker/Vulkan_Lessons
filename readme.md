@@ -12,7 +12,7 @@ Few changes made to accomodate my-style™.
 - [x] Vulkan instance
 - [x] Validation layer and debug messenger
 - [x] Physical devices and queue families
-- [ ] Logical devices and queues
+- [x] Logical devices and graphics queue
 
 ## Lesson 2 - Presentation
 - [ ] Window surface

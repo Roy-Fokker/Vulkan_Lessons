@@ -12,8 +12,11 @@ namespace vulkan_lessons
 
 	private:
 		void pick_physical_device(const vk::Instance &instance);
+		void create_logical_device();
 
 	private:
 		vk::PhysicalDevice physical_device;
+		vk::UniqueDevice logical_device;
+		vk::Queue graphics_queue;
 	};
 }
