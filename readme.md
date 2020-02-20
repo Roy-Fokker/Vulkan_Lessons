@@ -15,7 +15,7 @@ Few changes made to accomodate my-style™.
 - [x] Logical devices and graphics queue
 
 ## Lesson 2 - Presentation
-- [ ] Window surface
+- [x] Window surface
 - [ ] Swap chain
 - [ ] Image views
 

@@ -38,8 +38,8 @@ auto main() -> int
 		return true;
 	});
 
-	auto vk_inst = vulkan_lessons::vk_instance();
-	auto vk_device = vulkan_lessons::vk_device(vk_inst.get_instance());
+	auto vk_inst = vulkan_lessons::vk_instance(wnd.handle());
+	auto vk_device = vulkan_lessons::vk_device(vk_inst);
 
 	wnd.show();
 	while (wnd.handle() and not exit_application)

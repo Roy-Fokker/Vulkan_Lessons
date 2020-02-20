@@ -8,10 +8,11 @@ namespace vulkan_lessons
 	class vk_instance final
 	{
 	public:
-		vk_instance();
+		vk_instance(HWND hWnd);
 		~vk_instance();
 
-		auto get_instance() const->const vk::Instance &;
+		auto get_instance() const -> const vk::Instance &;
+		auto get_surface() const -> const vk::SurfaceKHR &;
 
 	private:
 		void create_instance();
@@ -22,9 +23,12 @@ namespace vulkan_lessons
 		void setup_debug_messenger();
 		void delete_debug_messenger();
 
+		void create_surface(HWND hWnd);
+
 	private:
 		vk::UniqueInstance instance;
 		vk::DispatchLoaderDynamic dispatch_loader;
 		vk::DebugUtilsMessengerEXT debug_messenger;
+		vk::UniqueSurfaceKHR surface;
 	};
 }

@@ -29,11 +29,13 @@ namespace
 	}
 }
 
-vk_instance::vk_instance()
+vk_instance::vk_instance(HWND hWnd)
 {
 	create_instance();
 
 	setup_debug_messenger();
+
+	create_surface(hWnd);
 }
 
 vk_instance::~vk_instance()
@@ -44,6 +46,11 @@ vk_instance::~vk_instance()
 auto vk_instance::get_instance() const -> const vk::Instance &
 {
 	return instance.get();
+}
+
+auto vk_instance::get_surface() const -> const vk::SurfaceKHR &
+{
+	return surface.get();
 }
 
 void vk_instance::create_instance()
@@ -189,4 +196,13 @@ void vk_instance::delete_debug_messenger()
 	instance->destroyDebugUtilsMessengerEXT(debug_messenger,
 											nullptr,
 											dispatch_loader);
+}
+
+void vk_instance::create_surface(HWND hWnd)
+{
+	auto surface_info = vk::Win32SurfaceCreateInfoKHR()
+		.setHwnd(hWnd)
+		.setHinstance(::GetModuleHandle(nullptr));
+
+	surface = instance->createWin32SurfaceKHRUnique(surface_info);
 }
